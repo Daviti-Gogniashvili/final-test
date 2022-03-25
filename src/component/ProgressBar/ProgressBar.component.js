@@ -8,12 +8,14 @@ export class ProgressBar extends PureComponent {
     constructor() {
         super();
         this.state = {
-            List: [],
-            check: ""
+            List: []
         }
     }
 
     componentDidMount() {
+        Object.entries(this.props.stepMap).map(([key,value],index)=>(
+            this.setState({[key]: index+1})
+        ))
         this.historyListener();
         this.setState({
             List: [...this.state.List, Object.keys(this.props.stepMap).indexOf(this.props.checkoutStep)]
@@ -22,11 +24,11 @@ export class ProgressBar extends PureComponent {
     }
 
     historyListener() {
-        let index;
         this.props.history.listen((location,action)=>{
             if(action==="POP") {
                 this.setState({
-                    List: [...this.state.List.filter(e => e === Object.keys(this.props.stepMap).indexOf(this.props.checkoutStep))]
+                    List: [...this.state.List.filter(e => e === Object.keys(this.props.stepMap).indexOf(this.props.checkoutStep))],
+                    [Object.keys(this.props.stepMap)[Object.keys(this.props.stepMap).indexOf(this.props.checkoutStep)]]: Object.keys(this.props.stepMap).indexOf(this.props.checkoutStep)+1
                 })
                 this.setState({
                     List: [...new Set(this.state.List)]
@@ -35,7 +37,8 @@ export class ProgressBar extends PureComponent {
             }
             if(action==="PUSH") {
                 this.setState({
-                    List: [...this.state.List, Object.keys(this.props.stepMap).indexOf(this.props.checkoutStep)]
+                    List: [...this.state.List, Object.keys(this.props.stepMap).indexOf(this.props.checkoutStep)],
+                    [Object.keys(this.props.stepMap)[Object.keys(this.props.stepMap).indexOf(this.props.checkoutStep)-1]]: "✔"
                     
                 })
                 console.log(this.state.List);
@@ -53,8 +56,8 @@ export class ProgressBar extends PureComponent {
                                 <div className={`ProgressBar-Line`}></div>
                         }
                         <div className='ProgressBar-Container'>
-                            {this.state.List[index] === index ? 
-                                <div className={`ProgressBar-Circle active-circle`}>{index+1}</div> : 
+                            {this.state.List[index] === index ?
+                                <div className={`ProgressBar-Circle active-circle`}>{this.state[key]}</div> : 
                                     <div className={`ProgressBar-Circle`}>{index+1}</div>
                             }   
                             {this.state.List[index] === index ? 
