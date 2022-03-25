@@ -8,7 +8,7 @@
         height: 5px;
         border-radius: 3px;
         width: 100%;
-        background: linear-gradient(to left, darkgray 50%, var(--primary-base-color) 50%);
+        background: linear-gradient(to left, var(--secondary-dark-color) 50%, var(--primary-base-color) 50%);
         background-size: 200% 100%;
         background-position:right bottom;
         transition:all 1s ease-in;
@@ -31,7 +31,7 @@
         width: 25px;
         border-radius: 15px;
         margin: 0 7px 5px 7px;
-        background-color: darkgray;
+        background-color: var(--secondary-dark-color);
     }
 
     &-Page{
@@ -40,7 +40,7 @@
         margin-bottom: 10px;
         width: fit-content;
         position: absolute;
-        color: darkgray;
+        color: var(--secondary-dark-color);
         font-weight: bold;
         font-size: 1.4rem;
     }
